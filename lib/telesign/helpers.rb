@@ -1,4 +1,4 @@
-module Telesignature
+module TeleSign
   module Helpers
     def random_with_N_digits n
       range_start = 10 ** (n - 1)
@@ -12,7 +12,7 @@ module Telesignature
         if response.status == 401
           raise AuthorizationError.new resp_obj, response
         else
-          raise TelesignError.new resp_obj, response
+          raise TeleSignError.new resp_obj, response
         end
       end
 

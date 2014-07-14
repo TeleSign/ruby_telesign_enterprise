@@ -1,4 +1,4 @@
-module Telesignature
+module TeleSign
   class Verify
     include Helpers
 
@@ -41,7 +41,7 @@ module Telesignature
       # **Example**::
 
       #     from telesign.api import Verify
-      #     from telesign.exceptions import AuthorizationError, TelesignError
+      #     from telesign.exceptions import AuthorizationError, TeleSignError
 
       #     cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
       #     secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
@@ -54,7 +54,7 @@ module Telesignature
       #     except AuthorizationError as ex:
       #         # API authorization failed, the API response should tell you the reason
       #         ...
-      #     except TelesignError as ex:
+      #     except TeleSignError as ex:
       #         # failed to execute the Verify service, check the API response for details
       #         ...
 
@@ -64,7 +64,7 @@ module Telesignature
       #             status_info = verify.status(phone_info.data["reference_id"], verify_code=phone_info.verify_code)
       #         except AuthorizationError as ex:
       #             ...
-      #         except TelesignError as ex:
+      #         except TeleSignError as ex:
       #             ...
 
       if verify_code.nil?
@@ -80,7 +80,7 @@ module Telesignature
           verify_code: verify_code,
           template: template}
 
-      headers = Telesignature::Auth.generate_auth_headers(
+      headers = TeleSign::Auth.generate_auth_headers(
           customer_id: @customer_id,
           secret_key: @secret_key,
           resource: resource,
@@ -94,7 +94,7 @@ module Telesignature
           # proxies=@proxy
       end
 
-      return Telesignature::Response.new validate_response(response), response, verify_code
+      return TeleSign::Response.new validate_response(response), response, verify_code
     end
 
     def call opts = {}
@@ -117,7 +117,7 @@ module Telesignature
       # **Example**::
 
       #     from telesign.api import Verify
-      #     from telesign.exceptions import AuthorizationError, TelesignError
+      #     from telesign.exceptions import AuthorizationError, TeleSignError
 
       #     cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
       #     secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
@@ -130,7 +130,7 @@ module Telesignature
       #     except AuthorizationError as ex:
       #         # API authorization failed, the API response should tell you the reason
       #         ...
-      #     except TelesignError as ex:
+      #     except TeleSignError as ex:
       #         # failed to execute the Verify service, check the API response for details
       #         ...
 
@@ -140,7 +140,7 @@ module Telesignature
       #             status_info = verify.status(phone_info.data["reference_id"], verify_code=phone_info.verify_code)
       #         except AuthorizationError as ex:
       #             ...
-      #         except TelesignError as ex:
+      #         except TeleSignError as ex:
       #             ...
 
       if verify_code.nil?
@@ -155,7 +155,7 @@ module Telesignature
           language: language,
           verify_code: verify_code}
 
-      headers = Telesignature::Auth.generate_auth_headers(
+      headers = TeleSign::Auth.generate_auth_headers(
           customer_id: @customer_id,
           secret_key: @secret_key,
           resource: resource,
@@ -169,7 +169,7 @@ module Telesignature
           # proxies=@proxy
       end
 
-      return Telesignature::Response.new validate_response(response), response, verify_code
+      return TeleSign::Response.new validate_response(response), response, verify_code
     end
 
     def status ref_id, verify_code=nil
@@ -185,7 +185,7 @@ module Telesignature
       # **Example**::
 
       #     from telesign.api import Verify
-      #     from telesign.exceptions import AuthorizationError, TelesignError
+      #     from telesign.exceptions import AuthorizationError, TeleSignError
 
       #     cust_id = "FFFFFFFF-EEEE-DDDD-1234-AB1234567890"
       #     secret_key = "EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=="
@@ -201,13 +201,13 @@ module Telesignature
       #             status_info = verify.status(phone_info.data["reference_id"], verify_code=phone_info.verify_code)
       #         except AuthorizationError as ex:
       #             ...
-      #         except TelesignError as ex:
+      #         except TeleSignError as ex:
       #             ...
 
       resource = "/v1/verify/%s" % ref_id
       method = 'GET'
 
-      headers = Telesignature::Auth.generate_auth_headers(
+      headers = TeleSign::Auth.generate_auth_headers(
           customer_id: @customer_id,
           secret_key: @secret_key,
           resource: resource,
@@ -225,7 +225,7 @@ module Telesignature
           # proxies=@proxy
       end
 
-      return Telesignature::Response.new validate_response(response), response
+      return TeleSign::Response.new validate_response(response), response
     end
   end
 end

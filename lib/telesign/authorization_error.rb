@@ -1,5 +1,5 @@
-module Telesignature
-  class AuthorizationError < TelesignError
+module TeleSign
+  class AuthorizationError < TeleSignError
     # """
     # Either the client failed to authenticate with the REST API server, or the service cannot be executed using the specified credentials.
 

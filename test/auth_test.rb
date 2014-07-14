@@ -8,7 +8,7 @@ class TestAuth < Minitest::Test
   end
 
   def test_headers_are_set_on_get
-    Telesignature::Auth.generate_auth_headers(
+    TeleSign::Auth.generate_auth_headers(
             customer_id: @expected_cid,
             secret_key: @expected_secret_key,
             resource: @expected_resource,
@@ -19,7 +19,7 @@ class TestAuth < Minitest::Test
     expected_nonce = '1234'
 
     headers = SecureRandom.stub :uuid, expected_nonce do
-      Telesignature::Auth.generate_auth_headers(
+      TeleSign::Auth.generate_auth_headers(
         customer_id: @expected_cid,
         secret_key: @expected_secret_key,
         resource: @expected_resource,
@@ -30,7 +30,7 @@ class TestAuth < Minitest::Test
   end
 
   def test_date_is_set
-    headers = Telesignature::Auth.generate_auth_headers(
+    headers = TeleSign::Auth.generate_auth_headers(
                 customer_id: @expected_cid,
                 secret_key: @expected_secret_key,
                 resource: @expected_resource,
@@ -43,7 +43,7 @@ class TestAuth < Minitest::Test
   def test_sha1_default_auth_method
     expected_auth_method = 'HMAC-SHA1'
 
-    headers = Telesignature::Auth.generate_auth_headers(
+    headers = TeleSign::Auth.generate_auth_headers(
                 customer_id: @expected_cid,
                 secret_key: @expected_secret_key,
                 resource: @expected_resource,
@@ -55,7 +55,7 @@ class TestAuth < Minitest::Test
   def test_sha256_auth_method
     expected_auth_method = 'HMAC-SHA256'
 
-    headers = Telesignature::Auth.generate_auth_headers(
+    headers = TeleSign::Auth.generate_auth_headers(
                 customer_id: @expected_cid,
                 secret_key: @expected_secret_key,
                 resource: @expected_resource,
@@ -68,7 +68,7 @@ class TestAuth < Minitest::Test
   def test_customer_id_in_auth
     expected_auth_start = "TSA %s:" % @expected_cid
 
-    headers = Telesignature::Auth.generate_auth_headers(
+    headers = TeleSign::Auth.generate_auth_headers(
                 customer_id: @expected_cid,
                 secret_key: @expected_secret_key,
                 resource: @expected_resource,

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    telesignature (0.0.11)
+    telesign (0.0.11)
       faraday
 
 GEM
@@ -95,5 +95,5 @@ DEPENDENCIES
   pry
   pry-nav
   rake
-  telesignature!
+  telesign!
   webmock

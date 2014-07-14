@@ -1,5 +1,5 @@
-module Telesignature
-  class ValidationError < TelesignError
+module TeleSign
+  class ValidationError < TeleSignError
     # """
     # The submitted data failed the intial validation, and the service was not executed.
 

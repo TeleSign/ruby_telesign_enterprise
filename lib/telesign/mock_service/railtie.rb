@@ -1,8 +1,8 @@
-module Telesignature
+module TeleSign
   module MockService
     class Railtie < ::Rails::Railtie
-      initializer 'telesignature_railtie.configure_rails_initialization' do
-        require 'telesignature/mock_service/spin_up'
+      initializer 'telesign_railtie.configure_rails_initialization' do
+        require 'telesign/mock_service/spin_up'
       end
     end
   end

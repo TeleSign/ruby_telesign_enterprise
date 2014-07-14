@@ -1,5 +1,5 @@
-module Telesignature
-  class TelesignError < ::StandardError
+module TeleSign
+  class TeleSignError < ::StandardError
     # The **exceptions** base class.
 
     #    * - Attributes

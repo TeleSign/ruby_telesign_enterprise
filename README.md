@@ -6,15 +6,15 @@ Ruby TeleSign SDK
 example
 =============
 ```ruby
-require 'telesignature'
+require 'telesign'
 
 customer_id = 'FFFFFFFF-EEEE-DDDD-1234-AB1234567890'
 secret_key = 'EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=='
 phone_number = '4445551212'
 
-require 'telesignature'
+require 'TeleSign'
 
-ta = Telesignature::Api.new customer_id: customer_id,
+ta = TeleSign::Api.new customer_id: customer_id,
                             secret_key: secret_key
 
 phone_info = ta.phone_id.standard phone_number
@@ -46,7 +46,7 @@ p "##################"
 
 begin
   phone_info = ta.phone_id.live phone_number, 'RXPF'
-rescue Telesignature::AuthorizationError => e
+rescue TeleSign::AuthorizationError => e
   puts e.message
 end
 

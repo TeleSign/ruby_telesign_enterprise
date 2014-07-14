@@ -1,14 +1,14 @@
-require 'telesignature/version'
-require 'telesignature/mock_service/railtie' if defined? Rails
+require 'telesign/version'
+require 'telesign/mock_service/railtie' if defined? Rails
 
-module Telesignature
-  autoload :TelesignError, 'telesignature/telesign_error'
-  autoload :AuthorizationError, 'telesignature/authorization_error'
-  autoload :ValidationError, 'telesignature/validation_error'
-  autoload :Auth, 'telesignature/auth'
-  autoload :Response, 'telesignature/response'
-  autoload :Helpers, 'telesignature/helpers'
-  autoload :Verify, 'telesignature/verify'
-  autoload :PhoneId, 'telesignature/phone_id'
-  autoload :Api, 'telesignature/api'
+module TeleSign
+  autoload :TeleSignError, 'telesign/telesign_error'
+  autoload :AuthorizationError, 'telesign/authorization_error'
+  autoload :ValidationError, 'telesign/validation_error'
+  autoload :Auth, 'telesign/auth'
+  autoload :Response, 'telesign/response'
+  autoload :Helpers, 'telesign/helpers'
+  autoload :Verify, 'telesign/verify'
+  autoload :PhoneId, 'telesign/phone_id'
+  autoload :Api, 'telesign/api'
 end

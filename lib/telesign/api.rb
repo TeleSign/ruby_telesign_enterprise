@@ -1,7 +1,7 @@
 require 'faraday'
 require 'json'
 
-module Telesignature
+module TeleSign
   class Api
     #    * - Attributes
     #      -

@@ -1,4 +1,4 @@
-module Telesignature
+module TeleSign
   class PhoneId
     include Helpers
 
@@ -38,7 +38,7 @@ module Telesignature
       #         # API authorization failed. Check the API response for details.
       #         ...
 
-      #     except TelesignError as ex:
+      #     except TeleSignError as ex:
       #         # Failed to completely execute the PhoneID service. Check the API response
       #         # for details. Data returned might be incomplete or invalid.
       #         ...
@@ -46,7 +46,7 @@ module Telesignature
       resource = "/v1/phoneid/standard/%s" % phone_number
       method = 'GET'
 
-      headers = Telesignature::Auth.generate_auth_headers(
+      headers = TeleSign::Auth.generate_auth_headers(
           customer_id: @customer_id,
           secret_key: @secret_key,
           resource: resource,
@@ -58,7 +58,7 @@ module Telesignature
           # proxies=@proxy
       end
 
-      return Telesignature::Response.new validate_response(response), response
+      return TeleSign::Response.new validate_response(response), response
     end
 
     def score phone_number, use_case_code
@@ -93,13 +93,13 @@ module Telesignature
       #         score_info = phoneid.score(phone_number, use_case_code)
       #     except AuthorizationError as ex:
       #         ...
-      #     except TelesignError as ex:
+      #     except TeleSignError as ex:
       #         ...
 
       resource = "/v1/phoneid/score/%s" % phone_number
       method = 'GET'
 
-      headers = Telesignature::Auth.generate_auth_headers(
+      headers = TeleSign::Auth.generate_auth_headers(
           customer_id: @customer_id,
           secret_key: @secret_key,
           resource: resource,
@@ -112,7 +112,7 @@ module Telesignature
           # proxies=@proxy
       end
 
-      return Telesignature::Response.new validate_response(response), response
+      return TeleSign::Response.new validate_response(response), response
     end
 
     def contact phone_number, use_case_code
@@ -142,7 +142,7 @@ module Telesignature
       #     except AuthorizationError as ex:
       #         # API authorization failed, the API response should tell you the reason
       #         ...
-      #     except TelesignError as ex:
+      #     except TeleSignError as ex:
       #         # failed to completely execute the PhoneID service, check the API response
       #         #    for details; data returned may be incomplete or not be valid
       #         ...
@@ -150,7 +150,7 @@ module Telesignature
       resource = "/v1/phoneid/contact/%s" % phone_number
       method = 'GET'
 
-      headers = Telesignature::Auth.generate_auth_headers(
+      headers = TeleSign::Auth.generate_auth_headers(
           customer_id: @customer_id,
           secret_key: @secret_key,
           resource: resource,
@@ -163,7 +163,7 @@ module Telesignature
           # proxies=@proxy
       end
 
-      return Telesignature::Response.new validate_response(response), response
+      return TeleSign::Response.new validate_response(response), response
     end
 
     def live phone_number, use_case_code
@@ -198,7 +198,7 @@ module Telesignature
       #     except AuthorizationError as ex:
       #         # API authorization failed, the API response should tell you the reason
       #         ...
-      #     except TelesignError as ex:
+      #     except TeleSignError as ex:
       #         # failed to completely execute the PhoneID service, check the API response
       #         #    for details; data returned may be incomplete or not be valid
       #         ...
@@ -206,7 +206,7 @@ module Telesignature
       resource = "/v1/phoneid/live/%s" % phone_number
       method = 'GET'
 
-      headers = Telesignature::Auth.generate_auth_headers(
+      headers = TeleSign::Auth.generate_auth_headers(
           customer_id: @customer_id,
           secret_key: @secret_key,
           resource: resource,
@@ -219,7 +219,7 @@ module Telesignature
           # proxies=@proxy
       end
 
-      return Telesignature::Response.new validate_response(response), response
+      return TeleSign::Response.new validate_response(response), response
     end
   end
 end

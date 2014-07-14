@@ -5,7 +5,7 @@ require 'base64'
 require 'uri'
 require 'openssl'
 
-# NOTE: the following is the Telesign crew who made the python version
+# NOTE: the following is the TeleSign crew who made the python version
 #       from which this codes was inspired
 
 # __author__ = "Jeremy Cunningham, Michael Fox, and Radu Maierean"
@@ -18,7 +18,7 @@ AUTH_METHOD = {
     sha256: {hash: OpenSSL::Digest::SHA256, name: 'HMAC-SHA256'}
 }
 
-module Telesignature
+module TeleSign
   class Auth
     def self.generate_auth_headers(opts = {})
       content_type = opts[:content_type] ? opts[:content_type] : ''

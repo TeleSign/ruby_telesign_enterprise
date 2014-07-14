@@ -27,26 +27,26 @@ class ExceptionTestTest < Minitest::Test
     end
   end
 
-  def test_properties_are_populated_in_TelesignError
+  def test_properties_are_populated_in_TeleSignError
     begin
-      raise Telesignature::TelesignError.new @expected_errors, @expected_http_response
-    rescue Telesignature::TelesignError => x
+      raise TeleSign::TeleSignError.new @expected_errors, @expected_http_response
+    rescue TeleSign::TeleSignError => x
       validate_exception_properties x
     end
   end
 
   def test_properties_are_populated_in_AuthorizationError
     begin
-      raise Telesignature::AuthorizationError.new @expected_errors, @expected_http_response
-    rescue Telesignature::AuthorizationError => x
+      raise TeleSign::AuthorizationError.new @expected_errors, @expected_http_response
+    rescue TeleSign::AuthorizationError => x
       validate_exception_properties x
     end
   end
 
   def test_properties_are_populated_in_ValidationError
     begin
-      raise Telesignature::ValidationError.new @expected_errors, @expected_http_response
-    rescue Telesignature::ValidationError => x
+      raise TeleSign::ValidationError.new @expected_errors, @expected_http_response
+    rescue TeleSign::ValidationError => x
       validate_exception_properties(x)
     end
   end
