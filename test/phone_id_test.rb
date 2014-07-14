@@ -13,7 +13,6 @@ class PhoneIdTest < Minitest::Test
     @expected_proxy = 'https://localhost:8080'
 
     @acceptance_headers = { 'Accept' => /.*/,
-                            'Accept-Encoding' => /.*/,
                             'Authorization' => /.*/,
                             'User-Agent' => /.*/,
                             'X-Ts-Auth-Method' => /.*/,
@@ -26,7 +25,7 @@ class PhoneIdTest < Minitest::Test
       with( headers: @acceptance_headers).
         to_return(body: @expected_data, status: 200)
 
-    tele = Telesignature::Api.new customer_id: @expected_cid, secret_key: @expected_secret_key
+    tele = TeleSign::Api.new customer_id: @expected_cid, secret_key: @expected_secret_key
     tele.phone_id.standard @expected_phone_no
   end
 
@@ -37,9 +36,9 @@ class PhoneIdTest < Minitest::Test
       with( headers: @acceptance_headers).
         to_return(body: response_body, status: [401, 'Unauthorized'])
 
-    tele = Telesignature::Api.new customer_id: @expected_cid, secret_key: @expected_secret_key
+    tele = TeleSign::Api.new customer_id: @expected_cid, secret_key: @expected_secret_key
 
-    assert_raises(Telesignature::AuthorizationError){
+    assert_raises(TeleSign::AuthorizationError){
       tele.phone_id.standard(@expected_phone_no)
     }
   end
@@ -51,9 +50,9 @@ class PhoneIdTest < Minitest::Test
       with( headers: @acceptance_headers).
         to_return(body: response_body, status: [502, 'Bad Gateway'])
 
-    tele = Telesignature::Api.new customer_id: @expected_cid, secret_key: @expected_secret_key
+    tele = TeleSign::Api.new customer_id: @expected_cid, secret_key: @expected_secret_key
 
-    assert_raises(Telesignature::TelesignError){
+    assert_raises(TeleSign::TeleSignError){
       tele.phone_id.standard(@expected_phone_no)
     }
   end
@@ -63,7 +62,7 @@ class PhoneIdTest < Minitest::Test
       with(query: {ucid: 'OTHR'}, headers: @acceptance_headers).
         to_return(body: @expected_data, status: 200)
 
-    tele = Telesignature::Api.new customer_id: @expected_cid, secret_key: @expected_secret_key
+    tele = TeleSign::Api.new customer_id: @expected_cid, secret_key: @expected_secret_key
     tele.phone_id.score @expected_phone_no, 'OTHR'
   end
 
@@ -72,7 +71,7 @@ class PhoneIdTest < Minitest::Test
       with(query: {ucid: 'OTHR'}, headers: @acceptance_headers).
         to_return(body: @expected_data, status: 200)
 
-    tele = Telesignature::Api.new customer_id: @expected_cid, secret_key: @expected_secret_key
+    tele = TeleSign::Api.new customer_id: @expected_cid, secret_key: @expected_secret_key
     tele.phone_id.contact @expected_phone_no, 'OTHR'
   end
 
@@ -81,7 +80,7 @@ class PhoneIdTest < Minitest::Test
       with(query: {ucid: 'OTHR'}, headers: @acceptance_headers).
         to_return(body: @expected_data, status: 200)
 
-    tele = Telesignature::Api.new customer_id: @expected_cid, secret_key: @expected_secret_key
+    tele = TeleSign::Api.new customer_id: @expected_cid, secret_key: @expected_secret_key
     tele.phone_id.live @expected_phone_no, 'OTHR'
   end
 
