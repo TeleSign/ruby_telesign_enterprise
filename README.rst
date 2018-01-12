@@ -28,6 +28,8 @@ To install the TeleSign Enterprise Ruby SDK:
     $ gem build /path/to/telesignenterprise.gemspec
     $ gem install /path/to/telesignenterprise-(insert latest version).gem
 
+Ruby **2+** is required for the TeleSign Enterprise Ruby SDK.
+
 Authentication
 --------------
 
