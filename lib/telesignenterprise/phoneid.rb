@@ -1,4 +1,4 @@
-require 'telesign/rest'
+require 'telesign/phoneid'
 
 PHONEID_STANDARD_RESOURCE = '/v1/phoneid/standard/%{phone_number}'
 PHONEID_SCORE_RESOURCE = '/v1/phoneid/score/%{phone_number}'
@@ -14,7 +14,7 @@ module TelesignEnterprise
   # TeleSign PhoneID provides a wide range of risk assessment indicators on the number to help confirm user identity,
   # delivering real-time decision making throughout the number lifecycle and ensuring only legitimate users are
   # creating accounts and accessing your applications.
-  class PhoneIdClient < Telesign::RestClient
+  class PhoneIdClient < Telesign::PhoneIdClient
 
     def initialize(customer_id,
                    api_key,
