@@ -67,7 +67,7 @@ class TestRest < Test::Unit::TestCase
 
   def test_phoneid_score
 
-    stub_request(:get, "localhost/v1/phoneid/score/#{@phone_number}").to_return(body: '{}')
+    stub_request(:get, "localhost/v1/phoneid/score/#{@phone_number}?ucid=TOOL").to_return(body: '{}')
 
     client = TelesignEnterprise::PhoneIdClient.new(@customer_id,
                                                    @api_key,
@@ -75,11 +75,11 @@ class TestRest < Test::Unit::TestCase
 
     client.score(@phone_number, 'TOOL')
 
-    assert_requested :get, "http://localhost/v1/phoneid/score/#{@phone_number}"
-    assert_not_requested :get, "http://localhost/v1/phoneid/score/#{@phone_number}", headers: {'Content-Type' => /.*\S.*/}
-    assert_requested :get, "http://localhost/v1/phoneid/score/#{@phone_number}", headers: {'x-ts-auth-method' => 'HMAC-SHA256'}
-    assert_requested :get, "http://localhost/v1/phoneid/score/#{@phone_number}", headers: {'x-ts-nonce' => /.*\S.*/}
-    assert_requested :get, "http://localhost/v1/phoneid/score/#{@phone_number}", headers: {'Date' => /.*\S.*/}
+    assert_requested :get, "http://localhost/v1/phoneid/score/#{@phone_number}?ucid=TOOL"
+    assert_not_requested :get, "http://localhost/v1/phoneid/score/#{@phone_number}?ucid=TOOL", headers: {'Content-Type' => /.*\S.*/}
+    assert_requested :get, "http://localhost/v1/phoneid/score/#{@phone_number}?ucid=TOOL", headers: {'x-ts-auth-method' => 'HMAC-SHA256'}
+    assert_requested :get, "http://localhost/v1/phoneid/score/#{@phone_number}?ucid=TOOL", headers: {'x-ts-nonce' => /.*\S.*/}
+    assert_requested :get, "http://localhost/v1/phoneid/score/#{@phone_number}?ucid=TOOL", headers: {'Date' => /.*\S.*/}
   end
 
   def test_score
@@ -166,6 +166,21 @@ class TestRest < Test::Unit::TestCase
     assert_requested :get, "http://localhost/v1/voice/REFERENCE_ID", headers: {'x-ts-auth-method' => 'HMAC-SHA256'}
     assert_requested :get, "http://localhost/v1/voice/REFERENCE_ID", headers: {'x-ts-nonce' => /.*\S.*/}
     assert_requested :get, "http://localhost/v1/voice/REFERENCE_ID", headers: {'Date' => /.*\S.*/}
+  end
+
+  def test_verify_status_with_verify_code
+    stub_request(:get, 'localhost/v1/verify/REFERENCE_ID?verify_code=12345').to_return(body: '{}')
+
+    client = TelesignEnterprise::VerifyClient.new(@customer_id,
+                                                 @api_key,
+                                                 rest_endpoint: 'http://localhost')
+
+    client.status('REFERENCE_ID', verify_code: '12345')
+
+    assert_requested :get, "http://localhost/v1/verify/REFERENCE_ID?verify_code=12345"
+    assert_requested :get, "http://localhost/v1/verify/REFERENCE_ID?verify_code=12345", headers: {'x-ts-auth-method' => 'HMAC-SHA256'}
+    assert_requested :get, "http://localhost/v1/verify/REFERENCE_ID?verify_code=12345", headers: {'x-ts-nonce' => /.*\S.*/}
+    assert_requested :get, "http://localhost/v1/verify/REFERENCE_ID?verify_code=12345", headers: {'Date' => /.*\S.*/}
   end
 
   def test_app_verify_status
