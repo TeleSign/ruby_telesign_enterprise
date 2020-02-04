@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'telesign', '~> 2.2.3'
   s.licenses = ['MIT']
   s.date = '2017-05-02'
-  s.summary = 'TeleSign Ruby SDK'
-  s.description = 'TeleSign Ruby SDK'
+  s.summary = 'TeleSign Enterprise Ruby SDK'
+  s.description = 'TeleSign Enterprise Ruby SDK'
   s.authors = ['TeleSign']
   s.email = 'support@telesign.com'
   s.files = Dir['lib/**/*rb']
