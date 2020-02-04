@@ -1,3 +1,9 @@
+2.2.1
+- Prepare to publish to gem
+
+2.2.0
+- Added support for phoneid addons and json content-type
+
 2.1.2
 - Added completion endpoint to VerifyClient
 

@@ -5,4 +5,9 @@
 
 # Other
 .DS_Store
+.dockerignore
+.bundle
+Dockerfile
+Gemfile
+Gemfile.lock
 
