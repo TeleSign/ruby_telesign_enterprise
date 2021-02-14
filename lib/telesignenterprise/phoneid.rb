@@ -1,6 +1,8 @@
 require 'telesign/phoneid'
 
 PHONEID_STANDARD_RESOURCE = '/v1/phoneid/standard/%{phone_number}'
+PHONEID_CONSENT_RESOURCE = '/consent/%{phone_number}'
+PHONEID_CONSENT_HISTORY_RESOURCE = '/consent/history/%{phone_number}'
 PHONEID_SCORE_RESOURCE = '/v1/phoneid/score/%{phone_number}'
 PHONEID_CONTACT_RESOURCE = '/v1/phoneid/contact/%{phone_number}'
 PHONEID_LIVE_RESOURCE = '/v1/phoneid/live/%{phone_number}'
@@ -18,7 +20,7 @@ module TelesignEnterprise
 
     def initialize(customer_id,
                    api_key,
-                   rest_endpoint: 'https://rest-ww.telesign.com',
+                   rest_endpoint: 'https://rest.telesign.com',
                    timeout: nil)
 
       super(customer_id,
@@ -37,15 +39,31 @@ module TelesignEnterprise
                **params)
     end
 
+    # The PhoneID Consent API allows you to submit and revoke consent for one or many PhoneID add-ons.
+    # You can also retrieve consent information for a phone number that is of a specific type, or retrieve the
+    # complete consent history for a phone number.
+    def consent_send(phone_number, **params)
+
+      self.post(PHONEID_CONSENT_RESOURCE % {:phone_number => phone_number}, **params)
+    end
+
+    def consent_search(phone_number, **params)
+
+      self.get(PHONEID_CONSENT_RESOURCE % {:phone_number => phone_number}, **params)
+    end
+
+    def consent_history(phone_number, **params)
+
+      self.get(PHONEID_CONSENT_HISTORY_RESOURCE % {:phone_number => phone_number}, **params)
+    end
+
     # Score is an API that delivers reputation scoring based on phone number intelligence, traffic patterns, machine
     # learning, and a global data consortium.
     #
     # See https://developer.telesign.com/docs/rest_api-phoneid-score for detailed API documentation.
     def score(phone_number, ucid, **params)
 
-      self.get(PHONEID_SCORE_RESOURCE % {:phone_number => phone_number},
-               ucid: ucid,
-               **params)
+      self.get(PHONEID_SCORE_RESOURCE % {:phone_number => phone_number}, **params)
     end
 
     # The PhoneID Contact API delivers contact information related to the subscriber's phone number to provide another
@@ -66,7 +84,6 @@ module TelesignEnterprise
     def live(phone_number, ucid, **params)
 
       self.get(PHONEID_LIVE_RESOURCE % {:phone_number => phone_number},
-               ucid: ucid,
                **params)
     end
 
@@ -74,11 +91,9 @@ module TelesignEnterprise
     # carriers' phone number data and TeleSign's proprietary analysis.
     #
     # See https://developer.telesign.com/docs/rest_api-phoneid-number-deactivation for detailed API documentation.
-    def number_deactivation(phone_number, ucid, **params)
+    def number_deactivation(phone_number, **params)
 
-      self.get(PHONEID_NUMBER_DEACTIVATION_RESOURCE % {:phone_number => phone_number},
-               ucid: ucid,
-               **params)
+      self.get(PHONEID_NUMBER_DEACTIVATION_RESOURCE % {:phone_number => phone_number}, **params)
     end
 
   end
