@@ -1,3 +1,7 @@
+2.2.2
+
+- Permits use of net-http-persistent 4.x.x
+
 2.2.1
 - Prepare to publish to gem
 
