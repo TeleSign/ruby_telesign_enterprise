@@ -59,19 +59,6 @@ module TelesignEnterprise
                 **params)
     end
 
-    # The Push Verify web service allows you to provide on-device transaction authorization for your end users. It
-    # works by delivering authorization requests to your end users via push notification, and then by receiving their
-    # permission responses via their mobile device's wireless Internet connection.
-    #
-    # See https://developer.telesign.com/docs/rest_api-verify-push for detailed API documentation.
-    def push(phone_number, ucid, **params)
-
-      self.post(VERIFY_PUSH_RESOURCE,
-                phone_number: phone_number,
-                ucid: ucid,
-                **params)
-    end
-
     # Retrieves the verification result for any verify resource.
     #
     # See https://developer.telesign.com/docs/rest_api-verify-transaction-callback for detailed API documentation.

@@ -1,3 +1,7 @@
+2.3.0
+
+- Removed push method in VerifyClient class
+
 2.2.2
 
 - Permits use of net-http-persistent 4.x.x
