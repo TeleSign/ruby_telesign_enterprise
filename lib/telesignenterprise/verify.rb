@@ -10,7 +10,7 @@ VERIFY_COMPLETION_RESOURCE = '/v1/verify/completion/%{reference_id}'
 module TelesignEnterprise
 
   # The Verify API delivers phone-based verification and two-factor authentication using a time-based, one-time passcode
-  # sent via SMS message, Voice call or Push Notification.
+  # sent via SMS message and Voice call.
   class VerifyClient < Telesign::RestClient
 
     def initialize(customer_id,
