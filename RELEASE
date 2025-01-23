@@ -1,3 +1,7 @@
+2.3.1
+
+- Removed VERIFY_PUSH_RESOURCE variable in VerifyClient class.
+
 2.3.0
 
 - Removed push method in VerifyClient class

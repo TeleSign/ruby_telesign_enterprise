@@ -3,7 +3,6 @@ require 'telesign/rest'
 VERIFY_SMS_RESOURCE = '/v1/verify/sms'
 VERIFY_VOICE_RESOURCE = '/v1/verify/call'
 VERIFY_SMART_RESOURCE = '/v1/verify/smart'
-VERIFY_PUSH_RESOURCE = '/v2/verify/push'
 VERIFY_STATUS_RESOURCE = '/v1/verify/%{reference_id}'
 VERIFY_COMPLETION_RESOURCE = '/v1/verify/completion/%{reference_id}'
 
