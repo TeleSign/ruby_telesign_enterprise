@@ -3,14 +3,13 @@ require 'telesign/rest'
 VERIFY_SMS_RESOURCE = '/v1/verify/sms'
 VERIFY_VOICE_RESOURCE = '/v1/verify/call'
 VERIFY_SMART_RESOURCE = '/v1/verify/smart'
-VERIFY_PUSH_RESOURCE = '/v2/verify/push'
 VERIFY_STATUS_RESOURCE = '/v1/verify/%{reference_id}'
 VERIFY_COMPLETION_RESOURCE = '/v1/verify/completion/%{reference_id}'
 
 module TelesignEnterprise
 
   # The Verify API delivers phone-based verification and two-factor authentication using a time-based, one-time passcode
-  # sent via SMS message, Voice call or Push Notification.
+  # sent via SMS message and Voice call.
   class VerifyClient < Telesign::RestClient
 
     def initialize(customer_id,
@@ -54,19 +53,6 @@ module TelesignEnterprise
     def smart(phone_number, ucid, **params)
 
       self.post(VERIFY_SMART_RESOURCE,
-                phone_number: phone_number,
-                ucid: ucid,
-                **params)
-    end
-
-    # The Push Verify web service allows you to provide on-device transaction authorization for your end users. It
-    # works by delivering authorization requests to your end users via push notification, and then by receiving their
-    # permission responses via their mobile device's wireless Internet connection.
-    #
-    # See https://developer.telesign.com/docs/rest_api-verify-push for detailed API documentation.
-    def push(phone_number, ucid, **params)
-
-      self.post(VERIFY_PUSH_RESOURCE,
                 phone_number: phone_number,
                 ucid: ucid,
                 **params)
