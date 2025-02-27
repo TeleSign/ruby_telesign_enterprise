@@ -19,9 +19,10 @@ module TelesignEnterprise
       @api_key = api_key
       @customer_id = customer_id
       @rest_endpoint = rest_endpoint
+      @timeout = timeout
     end
 
-    class OmniMessaging < Telesign::RestClient
+    class OmniMessagingClient < Telesign::RestClient
       def initialize(customer_id,
         api_key,
         rest_endpoint,
@@ -32,7 +33,7 @@ module TelesignEnterprise
         rest_endpoint: rest_endpoint,
         timeout: timeout)
       end
-      def OmniMessage(**params)
+      def omni_message(**params)
         self.post(OMNI_MESSAGING_RESOURCE, **params)
       end
 
@@ -42,9 +43,9 @@ module TelesignEnterprise
       end
     end
 
-    def OmniMessage (**params)
-      classOmniMsg = OmniMessaging.new(@customer_id, @api_key, @rest_endpoint)
-      classOmniMsg.OmniMessage(**params)
+    def omni_message (**params)
+      class_omni_msg = OmniMessagingClient.new(@customer_id, @api_key, @rest_endpoint, @timeout)
+      class_omni_msg.omni_message(**params)
     end
   end
 end

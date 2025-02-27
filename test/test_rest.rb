@@ -130,7 +130,7 @@ class TestRest < Test::Unit::TestCase
               'channels'=>[{channel: 'sms', fallback_time: 300 }],
               message_type: 'ARN'
             }
-    client.OmniMessage(**params)
+    client.omni_message(**params)
 
     assert_requested :post, "http://localhost/v1/omnichannel"
     assert_requested :post, "http://localhost/v1/omnichannel", body: '{"message":{"sms":{"template":"text","parameters":{"text":"Test Message"}}},"recipient":{"phone_number":"1234567890"},"channels":[{"channel":"sms","fallback_time":300}],"message_type":"ARN"}'
