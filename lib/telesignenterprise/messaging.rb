@@ -44,7 +44,7 @@ module TelesignEnterprise
     end
 
     def omni_message (**params)
-      class_omni_msg = OmniMessagingClient.new(@customer_id, @api_key, @rest_endpoint, @timeout)
+      class_omni_msg = OmniMessagingClient.new(@customer_id, @api_key, @rest_endpoint, timeout: @timeout)
       class_omni_msg.omni_message(**params)
     end
   end

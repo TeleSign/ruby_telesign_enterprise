@@ -5,6 +5,7 @@ VERIFY_VOICE_RESOURCE = '/v1/verify/call'
 VERIFY_SMART_RESOURCE = '/v1/verify/smart'
 VERIFY_STATUS_RESOURCE = '/v1/verify/%{reference_id}'
 VERIFY_COMPLETION_RESOURCE = '/v1/verify/completion/%{reference_id}'
+VERIFY_OMNICHANNEL_RESOURCE = '/verification'
 
 module TelesignEnterprise
 
@@ -23,6 +24,36 @@ module TelesignEnterprise
             timeout: timeout)
     end
 
+    class OmniVerifyClient < Telesign::RestClient
+      def initialize(customer_id,
+        api_key,
+        rest_endpoint: 'https://verify.telesign.com',
+        timeout: nil)
+
+        super(customer_id,
+        api_key,
+        rest_endpoint: rest_endpoint,
+        timeout: timeout)
+        @api_key = api_key
+        @customer_id = customer_id
+        @rest_endpoint = rest_endpoint
+        @timeout = timeout
+      end
+
+      def create_verification_process(phone_number, **params)
+        params = {recipient:{phone_number:phone_number}}
+        if(!params.key?("verification_policy"))
+          params[:verification_policy] = [{method: 'sms', fallback_time: 30 }]
+        end
+        self.post(VERIFY_OMNICHANNEL_RESOURCE, **params)
+      end
+
+      private
+      def content_type
+        "application/json"
+      end
+
+    end
     # The SMS Verify API delivers phone-based verification and two-factor authentication using a time-based,
     # one-time passcode sent over SMS.
     #
@@ -75,6 +106,15 @@ module TelesignEnterprise
 
       self.put(VERIFY_COMPLETION_RESOURCE % {:reference_id => reference_id},
                **params)
+    end
+
+    # Use this action to create a verification process for the specified phone number.
+    #
+    # See https://developer.telesign.com/enterprise/reference/createverificationprocess for detailed API documentation.
+    def create_verification_process(phone_number, **params)
+
+      class_omni_verify = OmniVerifyClient.new(@customer_id, @api_key, rest_endpoint:@rest_endpoint, timeout:@timeout)
+      class_omni_verify.create_verification_process(phone_number, **params)
     end
 
   end

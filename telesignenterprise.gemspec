@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name =                  'telesignenterprise'
-  s.version =               '2.3.1'
+  s.version =               '2.4.0'
   s.add_runtime_dependency  'telesign', '~> 2.2.3'
   s.licenses =              ['MIT']
   s.date =                  '2017-05-02'
