@@ -6,7 +6,6 @@ module TelesignEnterprise
   # TeleSign's Messaging API allows you to easily send SMS messages. You can send alerts, reminders, and notifications,
   # or you can send verification messages containing one-time passcodes (OTP).
   class MessagingClient < Telesign::MessagingClient
-
     def initialize(customer_id,
                    api_key,
                    rest_endpoint: 'https://rest-ww.telesign.com',
@@ -16,10 +15,6 @@ module TelesignEnterprise
             api_key,
             rest_endpoint: rest_endpoint,
             timeout: timeout)
-      @api_key = api_key
-      @customer_id = customer_id
-      @rest_endpoint = rest_endpoint
-      @timeout = timeout
     end
 
     class OmniMessagingClient < Telesign::RestClient
@@ -44,8 +39,8 @@ module TelesignEnterprise
     end
 
     def omni_message (**params)
-      class_omni_msg = OmniMessagingClient.new(@customer_id, @api_key, @rest_endpoint, @timeout)
-      class_omni_msg.omni_message(**params)
+      omni_msg = OmniMessagingClient.new(@customer_id, @api_key, @rest_endpoint)
+      omni_msg.omni_message(**params)
     end
   end
 end

@@ -1,3 +1,10 @@
+2.4.0
+
+- Added new method to send requests to Telesign Messaging.
+- Added new method to send requests to the Telesign Verify API.
+- Added new assert unit test for requests to Telesign Messaging.
+- Added new assert unit test for requests to the Telesign Verify API.
+
 2.3.1
 
 - Removed VERIFY_PUSH_RESOURCE variable in VerifyClient class.

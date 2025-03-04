@@ -5,13 +5,13 @@ VERIFY_VOICE_RESOURCE = '/v1/verify/call'
 VERIFY_SMART_RESOURCE = '/v1/verify/smart'
 VERIFY_STATUS_RESOURCE = '/v1/verify/%{reference_id}'
 VERIFY_COMPLETION_RESOURCE = '/v1/verify/completion/%{reference_id}'
+VERIFY_OMNICHANNEL_RESOURCE = '/verification'
 
 module TelesignEnterprise
 
   # The Verify API delivers phone-based verification and two-factor authentication using a time-based, one-time passcode
   # sent via SMS message and Voice call.
   class VerifyClient < Telesign::RestClient
-
     def initialize(customer_id,
                    api_key,
                    rest_endpoint: 'https://rest-ww.telesign.com',
@@ -23,12 +23,38 @@ module TelesignEnterprise
             timeout: timeout)
     end
 
+    class OmniVerifyClient < Telesign::RestClient
+      def initialize(customer_id,
+        api_key,
+        rest_endpoint: 'https://verify.telesign.com',
+        timeout: nil)
+
+        super(customer_id,
+        api_key,
+        rest_endpoint: rest_endpoint,
+        timeout: timeout)
+      end
+
+      def create_verification_process(phone_number, **params)
+        params = { recipient: { phone_number:phone_number } }
+        if !params.key?("verification_policy")
+          params[:verification_policy] = [{ method: 'sms', fallback_time: 30 }]
+        end
+        self.post(VERIFY_OMNICHANNEL_RESOURCE, **params)
+      end
+
+      private
+
+      def content_type
+        "application/json"
+      end
+
+    end
     # The SMS Verify API delivers phone-based verification and two-factor authentication using a time-based,
     # one-time passcode sent over SMS.
     #
     # See https://developer.telesign.com/docs/rest_api-verify-sms for detailed API documentation.
     def sms(phone_number, **params)
-
       self.post(VERIFY_SMS_RESOURCE,
                 phone_number: phone_number,
                 **params)
@@ -39,7 +65,6 @@ module TelesignEnterprise
     #
     # See https://developer.telesign.com/docs/rest_api-verify-call for detailed API documentation.
     def voice(phone_number, **params)
-
       self.post(VERIFY_VOICE_RESOURCE,
                 phone_number: phone_number,
                 **params)
@@ -51,7 +76,6 @@ module TelesignEnterprise
     #
     # See https://developer.telesign.com/docs/rest_api-smart-verify for detailed API documentation.
     def smart(phone_number, ucid, **params)
-
       self.post(VERIFY_SMART_RESOURCE,
                 phone_number: phone_number,
                 ucid: ucid,
@@ -62,7 +86,6 @@ module TelesignEnterprise
     #
     # See https://developer.telesign.com/docs/rest_api-verify-transaction-callback for detailed API documentation.
     def status(reference_id, **params)
-
       self.get(VERIFY_STATUS_RESOURCE % {:reference_id => reference_id},
                **params)
     end
@@ -72,9 +95,16 @@ module TelesignEnterprise
     #
     # See https://developer.telesign.com/docs/completion-service-for-verify-products for detailed API documentation.
     def completion(reference_id, **params)
-
       self.put(VERIFY_COMPLETION_RESOURCE % {:reference_id => reference_id},
                **params)
+    end
+
+    # Use this action to create a verification process for the specified phone number.
+    #
+    # See https://developer.telesign.com/enterprise/reference/createverificationprocess for detailed API documentation.
+    def create_verification_process(phone_number, **params)
+      omni_verify = OmniVerifyClient.new(@customer_id, @api_key, rest_endpoint: @rest_endpoint)
+      omni_verify.create_verification_process(phone_number, **params)
     end
 
   end
