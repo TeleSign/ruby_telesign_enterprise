@@ -34,21 +34,18 @@ module TelesignEnterprise
         api_key,
         rest_endpoint: rest_endpoint,
         timeout: timeout)
-        @api_key = api_key
-        @customer_id = customer_id
-        @rest_endpoint = rest_endpoint
-        @timeout = timeout
       end
 
       def create_verification_process(phone_number, **params)
-        params = {recipient:{phone_number:phone_number}}
-        if(!params.key?("verification_policy"))
-          params[:verification_policy] = [{method: 'sms', fallback_time: 30 }]
+        params = { recipient: { phone_number:phone_number } }
+        if !params.key?("verification_policy")
+          params[:verification_policy] = [{ method: 'sms', fallback_time: 30 }]
         end
         self.post(VERIFY_OMNICHANNEL_RESOURCE, **params)
       end
 
       private
+
       def content_type
         "application/json"
       end
@@ -113,8 +110,8 @@ module TelesignEnterprise
     # See https://developer.telesign.com/enterprise/reference/createverificationprocess for detailed API documentation.
     def create_verification_process(phone_number, **params)
 
-      class_omni_verify = OmniVerifyClient.new(@customer_id, @api_key, rest_endpoint:@rest_endpoint, timeout:@timeout)
-      class_omni_verify.create_verification_process(phone_number, **params)
+      var_omni_verify = OmniVerifyClient.new(@customer_id, @api_key, rest_endpoint: @rest_endpoint)
+      var_omni_verify.create_verification_process(phone_number, **params)
     end
 
   end
