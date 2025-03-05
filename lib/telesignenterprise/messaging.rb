@@ -16,7 +16,7 @@ module TelesignEnterprise
             rest_endpoint: rest_endpoint,
             timeout: timeout)
     end
-
+    # Telesign Messaging allows you to easily send a message to the target recipient using any of Telesign's supported channels.
     class OmniMessagingClient < Telesign::RestClient
       def initialize(customer_id,
         api_key,
