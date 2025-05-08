@@ -17,8 +17,8 @@ module TelesignEnterprise
                    rest_endpoint: 'https://rest-ww.telesign.com',
                    timeout: nil,
                    source: 'ruby_telesign_enterprise',
-                   sdkVersionOrigin: '2.5.0',
-                   sdkVersionDependency: Gem.loaded_specs['telesign'].version)
+                   sdk_version_origin: '2.5.0',
+                   sdk_version_dependency: Gem.loaded_specs['telesign'].version)
 
       super(customer_id,
             api_key,
@@ -26,7 +26,7 @@ module TelesignEnterprise
             timeout: timeout,
             source: source,
             sdk_version_origin: sdk_version_origin,
-            sdkVersionDependency: sdkVersionDependency)
+            sdk_version_dependency: sdk_version_dependency)
     end
 
     class OmniVerifyClient < Telesign::RestClient
