@@ -9,12 +9,17 @@ module TelesignEnterprise
     def initialize(customer_id,
                    api_key,
                    rest_endpoint: 'https://rest-ww.telesign.com',
-                   timeout: nil)
+                   timeout: nil,
+                   source: 'ruby_telesign_enterprise',
+                   sdkVersionOrigin: Gem.loaded_specs['telesignenterprise'].version,
+                   df: Gem.loaded_specs['telesign'].version)
 
       super(customer_id,
             api_key,
             rest_endpoint: rest_endpoint,
-            timeout: timeout)
+            timeout: timeout,
+            source: source,
+            sdkVersionOrigin: sdkVersionOrigin)
     end
     # Telesign Messaging allows you to easily send a message to the target recipient using any of Telesign's supported channels.
     class OmniMessagingClient < Telesign::RestClient
