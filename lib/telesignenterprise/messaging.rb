@@ -1,5 +1,5 @@
 require 'telesign'
-require_relative "constants"
+require_relative 'constants'
 
 OMNI_MESSAGING_RESOURCE = '/v1/omnichannel'
 module TelesignEnterprise

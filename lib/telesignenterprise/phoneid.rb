@@ -1,5 +1,5 @@
 require 'telesign/phoneid'
-require_relative "constants"
+require_relative 'constants'
 
 PHONEID_STANDARD_RESOURCE = '/v1/phoneid/standard/%{phone_number}'
 PHONEID_SCORE_RESOURCE = '/v1/phoneid/score/%{phone_number}'

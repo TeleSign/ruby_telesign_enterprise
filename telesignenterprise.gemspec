@@ -1,4 +1,4 @@
-require_relative "lib/telesignenterprise/constants"
+require_relative 'lib/telesignenterprise/constants'
 
 Gem::Specification.new do |s|
   s.name =                  'telesignenterprise'

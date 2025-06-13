@@ -1,6 +1,6 @@
 
 require 'telesign/rest'
-require_relative "constants"
+require_relative 'constants'
 
 PATH_CREATE_VERIFICATION_PROCESS = "/verification";
 PATH_UPDATE_VERIFICATION_PROCESS = "/verification/%{reference_id}/state";

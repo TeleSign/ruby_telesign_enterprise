@@ -1,5 +1,5 @@
 require 'telesign/rest'
-require_relative "constants"
+require_relative 'constants'
 
 TELEBUREAU_CREATE_RESOURCE = '/v1/telebureau/event'
 TELEBUREAU_RETRIEVE_RESOURCE = '/v1/telebureau/event/%{reference_id}'

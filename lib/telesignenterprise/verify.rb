@@ -1,6 +1,6 @@
 require 'telesign/rest'
 require_relative 'omniverify'
-require_relative "constants"
+require_relative 'constants'
 
 VERIFY_SMS_RESOURCE = '/v1/verify/sms'
 VERIFY_VOICE_RESOURCE = '/v1/verify/call'

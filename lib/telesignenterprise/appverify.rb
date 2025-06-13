@@ -1,5 +1,5 @@
 require 'telesign'
-require_relative "constants"
+require_relative 'constants'
 
 module TelesignEnterprise
 
