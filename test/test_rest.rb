@@ -11,6 +11,7 @@ class TestRest < Test::Unit::TestCase
     @customer_id = 'FFFFFFFF-EEEE-DDDD-1234-AB1234567890'
     @api_key = 'EXAMPLE----TE8sTgg45yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=='
     @phone_number = '1234567890'
+    @reference_id = '0123456789ABCDEF0123456789ABCDEF'
   end
 
   def test_phoneid_standard
@@ -220,13 +221,14 @@ class TestRest < Test::Unit::TestCase
     assert_requested :get, "http://localhost/v1/mobile/verification/status/EXTERNAL_ID", headers: {'Date' => /.*\S.*/}
   end
 
-  def test_verification_process
+  def test_create_verification_process
 
     stub_request(:post, 'localhost/verification').to_return(body: '{}')
 
     client = TelesignEnterprise::VerifyClient.new(@customer_id,
                                                @api_key,
-                                               rest_endpoint: 'http://localhost')
+                                               rest_endpoint: 'http://localhost',
+                                               rest_endpoint_verify: 'http://localhost')
 
     client.create_verification_process(@phone_number)
 
@@ -236,6 +238,45 @@ class TestRest < Test::Unit::TestCase
     assert_requested :post, "http://localhost/verification", headers: {'x-ts-auth-method' => 'HMAC-SHA256'}
     assert_requested :post, "http://localhost/verification", headers: {'x-ts-nonce' => /.*\S.*/}
     assert_requested :post, "http://localhost/verification", headers: {'Date' => /.*\S.*/}
+  end
+
+  def test_retrieve_verification_process
+
+    stub_request(:get, "localhost/verification/#{@reference_id}").to_return(body: '{}')
+
+    client = TelesignEnterprise::OmniVerifyClient.new(@customer_id,
+                                               @api_key,
+                                               rest_endpoint: 'http://localhost')
+
+    client.retrieve_verification_process(@reference_id)
+
+    assert_requested :get, "localhost/verification/#{@reference_id}"
+    assert_requested :get, "localhost/verification/#{@reference_id}", headers: {'x-ts-auth-method' => 'HMAC-SHA256'}
+    assert_requested :get, "localhost/verification/#{@reference_id}", headers: {'x-ts-nonce' => /.*\S.*/}
+    assert_requested :get, "localhost/verification/#{@reference_id}", headers: {'Date' => /.*\S.*/}
+  end
+
+  def test_update_verification_process
+
+    stub_request(:patch, "localhost/verification/#{@reference_id}").to_return(body: '{}')
+    stub_request(:patch, "localhost/verification/#{@reference_id}/state").to_return(body: '{}')
+
+
+    client = TelesignEnterprise::OmniVerifyClient.new(@customer_id,
+                                               @api_key,
+                                               rest_endpoint: 'http://localhost')
+
+    params = {
+      action: 'finalize',
+      security_factor: '123456'
+    }                                
+
+    client.update_verification_process(@reference_id, **params)
+
+    assert_requested :patch, "localhost/verification/#{@reference_id}/state"
+    assert_requested :patch, "localhost/verification/#{@reference_id}/state", headers: {'x-ts-auth-method' => 'Basic'}
+    assert_requested :patch, "localhost/verification/#{@reference_id}/state", headers: {'x-ts-nonce' => /.*\S.*/}
+    assert_requested :patch, "localhost/verification/#{@reference_id}/state", headers: {'Date' => /.*\S.*/}
   end
 
 

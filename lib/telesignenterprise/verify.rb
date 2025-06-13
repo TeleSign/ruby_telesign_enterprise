@@ -1,4 +1,6 @@
 require 'telesign/rest'
+require_relative 'omniverify'
+require_relative "constants"
 
 VERIFY_SMS_RESOURCE = '/v1/verify/sms'
 VERIFY_VOICE_RESOURCE = '/v1/verify/call'
@@ -17,9 +19,11 @@ module TelesignEnterprise
                    rest_endpoint: 'https://rest-ww.telesign.com',
                    timeout: nil,
                    source: 'ruby_telesign_enterprise',
-                   sdk_version_origin: '2.5.0',
-                   sdk_version_dependency: Gem.loaded_specs['telesign'].version)
+                   sdk_version_origin: TelesignEnterprise::SDK_VERSION,
+                   sdk_version_dependency: Gem.loaded_specs['telesign'].version,
+                   rest_endpoint_verify: 'https://verify.telesign.com')
 
+      @omniVerifyClient = OmniVerifyClient.new(customer_id, api_key, rest_endpoint: rest_endpoint_verify)
       super(customer_id,
             api_key,
             rest_endpoint: rest_endpoint,
@@ -29,33 +33,6 @@ module TelesignEnterprise
             sdk_version_dependency: sdk_version_dependency)
     end
 
-    class OmniVerifyClient < Telesign::RestClient
-      def initialize(customer_id,
-        api_key,
-        rest_endpoint: 'https://verify.telesign.com',
-        timeout: nil)
-
-        super(customer_id,
-        api_key,
-        rest_endpoint: rest_endpoint,
-        timeout: timeout)
-      end
-
-      def create_verification_process(phone_number, **params)
-        params = { recipient: { phone_number:phone_number } }
-        if !params.key?("verification_policy")
-          params[:verification_policy] = [{ method: 'sms', fallback_time: 30 }]
-        end
-        self.post(VERIFY_OMNICHANNEL_RESOURCE, **params)
-      end
-
-      private
-
-      def content_type
-        "application/json"
-      end
-
-    end
     # The SMS Verify API delivers phone-based verification and two-factor authentication using a time-based,
     # one-time passcode sent over SMS.
     #
@@ -109,8 +86,7 @@ module TelesignEnterprise
     #
     # See https://developer.telesign.com/enterprise/reference/createverificationprocess for detailed API documentation.
     def create_verification_process(phone_number, **params)
-      omni_verify = OmniVerifyClient.new(@customer_id, @api_key, rest_endpoint: @rest_endpoint)
-      omni_verify.create_verification_process(phone_number, **params)
+      @omniVerifyClient.create_verification_process(phone_number, **params)
     end
 
   end

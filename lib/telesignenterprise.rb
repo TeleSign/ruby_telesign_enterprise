@@ -1,6 +1,7 @@
 require 'telesignenterprise/phoneid'
 require 'telesignenterprise/telebureau'
 require 'telesignenterprise/verify'
+require 'telesignenterprise/omniverify'
 require 'telesignenterprise/score'
 require 'telesignenterprise/messaging'
 require 'telesignenterprise/voice'
