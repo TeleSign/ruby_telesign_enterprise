@@ -1,4 +1,5 @@
 require 'telesign/phoneid'
+require_relative 'constants'
 
 PHONEID_STANDARD_RESOURCE = '/v1/phoneid/standard/%{phone_number}'
 PHONEID_SCORE_RESOURCE = '/v1/phoneid/score/%{phone_number}'
@@ -21,7 +22,7 @@ module TelesignEnterprise
                    rest_endpoint: 'https://rest-ww.telesign.com',
                    timeout: nil,
                    source: 'ruby_telesign_enterprise',
-                   sdk_version_origin: '2.5.0',
+                   sdk_version_origin: TelesignEnterprise::SDK_VERSION,
                    sdk_version_dependency: Gem.loaded_specs['telesign'].version)
 
       super(customer_id,
