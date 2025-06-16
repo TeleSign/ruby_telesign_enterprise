@@ -2,9 +2,9 @@
 require 'telesign/rest'
 require_relative 'constants'
 
-PATH_CREATE_VERIFICATION_PROCESS = "/verification";
-PATH_UPDATE_VERIFICATION_PROCESS = "/verification/%{reference_id}/state";
-PATH_RETRIEVE_VERIFICATION_PROCESS = "/verification/%{reference_id}";
+PATH_CREATE_VERIFICATION_PROCESS = '/verification'
+PATH_UPDATE_VERIFICATION_PROCESS = '/verification/%{reference_id}/state'
+PATH_RETRIEVE_VERIFICATION_PROCESS = '/verification/%{reference_id}'
 
 module TelesignEnterprise
 
@@ -34,10 +34,8 @@ module TelesignEnterprise
     #
     # See https://developer.telesign.com/enterprise/reference/createverificationprocess for detailed API documentation.
     def create_verification_process(phone_number, **params)
-      params = { recipient: { phone_number:phone_number } }
-      if !params.key?("verification_policy")
-        params[:verification_policy] = [{ method: 'sms', fallback_time: 30 }]
-      end
+      params = params.merge({ recipient: { phone_number: phone_number } })
+      params[:verification_policy] ||= [{ method: 'sms', fallback_time: 30 }]
       self.post(PATH_CREATE_VERIFICATION_PROCESS, **params)
     end
 
