@@ -1,4 +1,5 @@
 require 'telesign'
+require_relative 'constants'
 
 module TelesignEnterprise
 
@@ -10,7 +11,7 @@ module TelesignEnterprise
                    rest_endpoint: 'https://rest-ww.telesign.com',
                    timeout: nil,
                    source: 'ruby_telesign_enterprise',
-                   sdk_version_origin: '2.5.0',
+                   sdk_version_origin: TelesignEnterprise::SDK_VERSION,
                    sdk_version_dependency: Gem.loaded_specs['telesign'].version)
 
       super(customer_id,
