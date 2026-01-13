@@ -29,42 +29,6 @@ class TestRest < Test::Unit::TestCase
     assert_requested :get, "http://localhost/v1/phoneid/standard/#{@phone_number}", headers: {'Date' => /.*\S.*/}
   end
 
-  def test_phoneid
-
-    stub_request(:post, "localhost/v1/phoneid/#{@phone_number}").to_return(body: '{}')
-
-    client = TelesignEnterprise::PhoneIdClient.new(@customer_id,
-                                                   @api_key,
-                                                   rest_endpoint: 'http://localhost')
-
-    client.phoneid(@phone_number)
-
-    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}"
-    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", body: '{}'
-    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'Content-Type' => 'application/json'}
-    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'x-ts-auth-method' => 'HMAC-SHA256'}
-    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'x-ts-nonce' => /.*\S.*/}
-    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'Date' => /.*\S.*/}
-  end
-
-  def test_phoneid_with_addons
-
-    stub_request(:post, "localhost/v1/phoneid/#{@phone_number}").to_return(body: '{}')
-
-    client = TelesignEnterprise::PhoneIdClient.new(@customer_id,
-                                                   @api_key,
-                                                   rest_endpoint: 'http://localhost')
-
-    client.phoneid(@phone_number, addons: {'contact': {}})
-
-    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}"
-    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", body: '{"addons":{"contact":{}}}'
-    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'Content-Type' => 'application/json'}
-    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'x-ts-auth-method' => 'HMAC-SHA256'}
-    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'x-ts-nonce' => /.*\S.*/}
-    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'Date' => /.*\S.*/}
-  end
-
   def test_phoneid_score
 
     stub_request(:get, "localhost/v1/phoneid/score/#{@phone_number}?ucid=TOOL").to_return(body: '{}')
@@ -279,5 +243,30 @@ class TestRest < Test::Unit::TestCase
     assert_requested :patch, "localhost/verification/#{@reference_id}/state", headers: {'Date' => /.*\S.*/}
   end
 
+  def test_phone_id_path
+    stub_request(:post, "localhost/v1/phoneid/#{@phone_number}").to_return(body: '{}')
+
+    client = TelesignEnterprise::PhoneIdClient.new(@customer_id, @api_key, rest_endpoint: 'http://localhost')
+    client.phone_id_path(@phone_number)
+
+    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}"
+    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'Content-Type' => 'application/json'}
+    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'x-ts-auth-method' => 'HMAC-SHA256'}
+    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'x-ts-nonce' => /.*\S.*/}
+    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'Date' => /.*\S.*/}
+  end
+
+  def test_phone_id_body
+    stub_request(:post, "localhost/v1/phoneid").to_return(body: '{}')
+
+    client = TelesignEnterprise::PhoneIdClient.new(@customer_id, @api_key, rest_endpoint: 'http://localhost')
+    client.phone_id_body(@phone_number)
+
+    assert_requested :post, "http://localhost/v1/phoneid"
+    assert_requested :post, "http://localhost/v1/phoneid", headers: {'Content-Type' => 'application/json'}
+    assert_requested :post, "http://localhost/v1/phoneid", headers: {'x-ts-auth-method' => 'HMAC-SHA256'}
+    assert_requested :post, "http://localhost/v1/phoneid", headers: {'x-ts-nonce' => /.*\S.*/}
+    assert_requested :post, "http://localhost/v1/phoneid", headers: {'Date' => /.*\S.*/}
+  end
 
 end
