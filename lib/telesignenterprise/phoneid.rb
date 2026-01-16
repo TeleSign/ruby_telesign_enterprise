@@ -3,9 +3,9 @@ require_relative 'constants'
 
 PHONEID_STANDARD_RESOURCE = '/v1/phoneid/standard/%{phone_number}'
 PHONEID_SCORE_RESOURCE = '/v1/phoneid/score/%{phone_number}'
-PHONEID_CONTACT_RESOURCE = '/v1/phoneid/contact/%{phone_number}'
 PHONEID_LIVE_RESOURCE = '/v1/phoneid/live/%{phone_number}'
-PHONEID_NUMBER_DEACTIVATION_RESOURCE = '/v1/phoneid/number_deactivation/%{phone_number}'
+PHONEID_GET_INFO_PATH = '/v1/phoneid/%{phone_number}'
+PHONEID_GET_INFO_PATH_ALT = '/v1/phoneid'
 
 module TelesignEnterprise
 
@@ -49,19 +49,7 @@ module TelesignEnterprise
     #
     # See https://developer.telesign.com/docs/rest_api-phoneid-score for detailed API documentation.
     def score(phone_number, ucid, **params)
-
       self.get(PHONEID_SCORE_RESOURCE % {:phone_number => phone_number},
-               ucid: ucid,
-               **params)
-    end
-
-    # The PhoneID Contact API delivers contact information related to the subscriber's phone number to provide another
-    # set of indicators for established risk engines.
-    #
-    # See https://developer.telesign.com/docs/rest_api-phoneid-contact for detailed API documentation.
-    def contact(phone_number, ucid, **params)
-
-      self.get(PHONEID_CONTACT_RESOURCE % {:phone_number => phone_number},
                ucid: ucid,
                **params)
     end
@@ -77,16 +65,25 @@ module TelesignEnterprise
                **params)
     end
 
-    # The PhoneID Number Deactivation API determines whether a phone number has been deactivated and when, based on
-    # carriers' phone number data and TeleSign's proprietary analysis.
+    # Enter a phone number with country code to receive detailed information about carrier, location, and other details.
+    # Phone number provided in URL path: POST /v1/phoneid/{phone_number}
     #
-    # See https://developer.telesign.com/docs/rest_api-phoneid-number-deactivation for detailed API documentation.
-    def number_deactivation(phone_number, ucid, **params)
-
-      self.get(PHONEID_NUMBER_DEACTIVATION_RESOURCE % {:phone_number => phone_number},
-               ucid: ucid,
-               **params)
+    # See https://developer.telesign.com/enterprise/reference/submitphonenumberforidentity for detailed API documentation.
+    def phone_id_path(phone_number, **params)
+      params['consent'] ||= { 'method' => 1 }
+      
+      self.post(PHONEID_GET_INFO_PATH % {:phone_number => phone_number}, **params)
     end
 
+    # Enter a phone number with country code to receive detailed information about carrier, location, and other details.
+    # Phone number provided in body: POST /v1/phoneid
+    #
+    # See https://developer.telesign.com/enterprise/reference/submitphonenumberforidentityalt for detailed API documentation.
+    def phone_id_body(phone_number, **params)
+      params['phone_number'] = phone_number
+      params['consent'] ||= { 'method' => 1 }
+  
+      self.post(PHONEID_GET_INFO_PATH_ALT, **params)
+    end
   end
 end
