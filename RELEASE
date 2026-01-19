@@ -1,3 +1,7 @@
+4.0.0
+
+- Added full support for App Verify API.
+
 3.0.0
 
 - Added full support for latest version of Phone ID via POST requests.
