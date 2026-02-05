@@ -3,7 +3,7 @@ require_relative 'lib/telesignenterprise/constants'
 Gem::Specification.new do |s|
   s.name =                  'telesignenterprise'
   s.version =               TelesignEnterprise::SDK_VERSION
-  s.add_runtime_dependency  'telesign', '~> 3.0.0'
+  s.add_runtime_dependency  'telesign', '~> 4.0.0'
   s.licenses =              ['MIT']
   s.date =                  '2017-05-02'
   s.summary =               'TeleSign Enterprise Ruby SDK'

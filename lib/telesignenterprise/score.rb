@@ -8,7 +8,7 @@ module TelesignEnterprise
 
     def initialize(customer_id,
                    api_key,
-                   rest_endpoint: 'https://rest-ww.telesign.com',
+                   rest_endpoint: 'https://detect.telesign.com',
                    timeout: nil,
                    source: 'ruby_telesign_enterprise',
                    sdk_version_origin: TelesignEnterprise::SDK_VERSION,

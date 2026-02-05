@@ -1,3 +1,8 @@
+5.0.0
+
+- Added support for Intelligence Cloud to use new endpoint.
+- Removed Legacy PID Score.
+
 4.0.0
 
 - Added full support for App Verify API.

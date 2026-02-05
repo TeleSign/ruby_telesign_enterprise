@@ -2,7 +2,6 @@ require 'telesign/phoneid'
 require_relative 'constants'
 
 PHONEID_STANDARD_RESOURCE = '/v1/phoneid/standard/%{phone_number}'
-PHONEID_SCORE_RESOURCE = '/v1/phoneid/score/%{phone_number}'
 PHONEID_LIVE_RESOURCE = '/v1/phoneid/live/%{phone_number}'
 PHONEID_GET_INFO_PATH = '/v1/phoneid/%{phone_number}'
 PHONEID_GET_INFO_PATH_ALT = '/v1/phoneid'
@@ -41,16 +40,6 @@ module TelesignEnterprise
     def standard(phone_number, **params)
 
       self.get(PHONEID_STANDARD_RESOURCE % {:phone_number => phone_number},
-               **params)
-    end
-
-    # Score is an API that delivers reputation scoring based on phone number intelligence, traffic patterns, machine
-    # learning, and a global data consortium.
-    #
-    # See https://developer.telesign.com/docs/rest_api-phoneid-score for detailed API documentation.
-    def score(phone_number, ucid, **params)
-      self.get(PHONEID_SCORE_RESOURCE % {:phone_number => phone_number},
-               ucid: ucid,
                **params)
     end
 
