@@ -3,7 +3,7 @@ require_relative 'lib/telesignenterprise/constants'
 Gem::Specification.new do |s|
   s.name =                  'telesignenterprise'
   s.version =               TelesignEnterprise::SDK_VERSION
-  s.add_runtime_dependency  'telesign', '~> 4.0.0'
+  s.add_runtime_dependency  'telesign', '~> 4.0.1'
   s.licenses =              ['MIT']
   s.date =                  '2017-05-02'
   s.summary =               'TeleSign Enterprise Ruby SDK'
@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.files =                 Dir['lib/**/*rb']
   s.homepage =              'http://rubygems.org/gems/telesign'
 
+  s.add_runtime_dependency 'base64'
   s.add_development_dependency 'rake',      '~> 13.2'
   s.add_development_dependency 'uuid',      '~> 2.3'
   s.add_development_dependency 'mocha',     '~> 2.7'
