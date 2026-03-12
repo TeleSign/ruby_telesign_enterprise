@@ -1,3 +1,7 @@
+6.0.0
+
+- Removed the create_event method for Telebureau.
+
 5.0.1
 
 - Fix missing runtime dependency.

@@ -1,7 +1,6 @@
 require 'telesign/rest'
 require_relative 'constants'
 
-TELEBUREAU_CREATE_RESOURCE = '/v1/telebureau/event'
 TELEBUREAU_RETRIEVE_RESOURCE = '/v1/telebureau/event/%{reference_id}'
 TELEBUREAU_DELETE_RESOURCE = '/v1/telebureau/event/%{reference_id}'
 
@@ -27,18 +26,6 @@ module TelesignEnterprise
             source: source,
             sdk_version_origin: sdk_version_origin,
             sdk_version_dependency: sdk_version_dependency)
-    end
-
-    # Creates a telebureau event corresponding to supplied data.
-    #
-    # See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
-    def create_event(phone_number, fraud_type, occurred_at, **params)
-
-      self.post(TELEBUREAU_CREATE_RESOURCE,
-                phone_number: phone_number,
-                fraud_type: fraud_type,
-                occured_at: occurred_at,
-                **params)
     end
 
     # Retrieves the fraud event status. You make this call in your web application after completion of create
