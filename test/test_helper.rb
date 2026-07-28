@@ -12,6 +12,7 @@ class TelesignEnterpriseTestCase < Test::Unit::TestCase
     @api_key = 'ABC12345yusumoN6BYsBVkh+yRJ5czgsnCehZaOYldPJdmFh6NeX8kunZ2zU1YWaUw/0wV6xfw=='
     @phone_number = '1234567890'
     @reference_id = '0123456789ABCDEF0123456789ABCDEF'
+    @email_address = 'support@vero-finto.com'
   end
 
 end

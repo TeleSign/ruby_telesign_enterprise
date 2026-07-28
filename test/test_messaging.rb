@@ -19,4 +19,17 @@ class TestMessaging < TelesignEnterpriseTestCase
     assert_requested :post, "http://localhost/v1/messaging", headers: {'x-ts-nonce' => /.*\S.*/}
     assert_requested :post, "http://localhost/v1/messaging", headers: {'Date' => /.*\S.*/}
   end
+
+  def test_messaging_status
+
+    stub_request(:get, 'localhost/v1/messaging/REFERENCE_ID').to_return(body: '{}')
+
+    client = TelesignEnterprise::MessagingClient.new(@customer_id,
+                                                 @api_key,
+                                                 rest_endpoint: 'http://localhost')
+
+    client.status('REFERENCE_ID')
+
+    assert_requested :get, "http://localhost/v1/messaging/REFERENCE_ID"
+  end
 end

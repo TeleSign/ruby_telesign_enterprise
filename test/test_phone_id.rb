@@ -58,5 +58,14 @@ class TestPhoneId < TelesignEnterpriseTestCase
     assert_requested :post, "http://localhost/v1/phoneid", headers: {'x-ts-nonce' => /.*\S.*/}
     assert_requested :post, "http://localhost/v1/phoneid", headers: {'Date' => /.*\S.*/}
   end
-  
+
+  def test_phoneid_method_directly
+    stub_request(:post, "localhost/v1/phoneid/#{@phone_number}").to_return(body: '{}')
+
+    client = TelesignEnterprise::PhoneIdClient.new(@customer_id, @api_key, rest_endpoint: 'http://localhost')
+    client.phoneid(@phone_number)
+
+    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}"
+    assert_requested :post, "http://localhost/v1/phoneid/#{@phone_number}", headers: {'Content-Type' => 'application/json'}
+  end
 end

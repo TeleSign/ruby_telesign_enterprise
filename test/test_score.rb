@@ -51,4 +51,36 @@ class TestScore < TelesignEnterpriseTestCase
     assert_requested :post, "https://detect.telesign.com/intelligence/phone",
                     headers: {'Date' => /.*\S.*/}
   end
+
+  def test_score_with_email_address
+    stub_request(:post, "https://detect.telesign.com/intelligence/phone")
+      .with(
+        body: hash_including({
+          'phone_number' => @phone_number,
+          'account_lifecycle_event' => @account_lifecycle_event,
+          'email_address' => @email_address
+        }),
+        headers: { 'Content-Type' => 'application/x-www-form-urlencoded' }
+      )
+      .to_return(
+        status: 200,
+        body: '{"risk": {"level": "low", "recommendation": "allow"}}',
+        headers: { 'Content-Type' => 'application/json' }
+      )
+
+    response = @score_client.score(@phone_number,
+                                   @account_lifecycle_event,
+                                   email_address: @email_address)
+
+    assert response.ok
+    assert_equal 'low', response.json['risk']['level']
+    assert_equal 'allow', response.json['risk']['recommendation']
+
+    assert_requested :post, "https://detect.telesign.com/intelligence/phone",
+                    body: hash_including({
+                      'phone_number' => @phone_number,
+                      'account_lifecycle_event' => @account_lifecycle_event,
+                      'email_address' => @email_address
+                    })
+  end
 end
