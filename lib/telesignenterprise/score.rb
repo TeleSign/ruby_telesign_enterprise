@@ -2,10 +2,8 @@ require 'telesign'
 require_relative 'constants'
 
 module TelesignEnterprise
-
   # Score provides risk information about a specified phone number.
   class ScoreClient < Telesign::ScoreClient
-
     def initialize(customer_id,
                    api_key,
                    rest_endpoint: 'https://detect.telesign.com',
@@ -13,7 +11,6 @@ module TelesignEnterprise
                    source: 'ruby_telesign_enterprise',
                    sdk_version_origin: TelesignEnterprise::SDK_VERSION,
                    sdk_version_dependency: Gem.loaded_specs['telesign'].version)
-
       super(customer_id,
             api_key,
             rest_endpoint: rest_endpoint,
@@ -22,6 +19,5 @@ module TelesignEnterprise
             sdk_version_origin: sdk_version_origin,
             sdk_version_dependency: sdk_version_dependency)
     end
-
   end
 end

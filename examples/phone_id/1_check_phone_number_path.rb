@@ -11,7 +11,7 @@ response = phoneid_client.phone_id_path(phone_number)
 puts "status_code=#{response.status_code}, ok=#{response.ok}, responsebody=#{response.body}"
 
 if response.ok
-  puts "Phone number %s carrier: '%s'" % [phone_number, response.json['carrier']['name']]
+  puts format("Phone number %s carrier: '%s'", phone_number, response.json['carrier']['name'])
 else
   puts "ERROR: #{response.status_code} - #{response.body}"
 end

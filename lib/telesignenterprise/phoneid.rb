@@ -1,13 +1,12 @@
 require 'telesign/phoneid'
 require_relative 'constants'
 
-PHONEID_STANDARD_RESOURCE = '/v1/phoneid/standard/%{phone_number}'
-PHONEID_LIVE_RESOURCE = '/v1/phoneid/live/%{phone_number}'
-PHONEID_GET_INFO_PATH = '/v1/phoneid/%{phone_number}'
-PHONEID_GET_INFO_PATH_ALT = '/v1/phoneid'
+PHONEID_STANDARD_RESOURCE = '/v1/phoneid/standard/%{phone_number}'.freeze
+PHONEID_LIVE_RESOURCE = '/v1/phoneid/live/%{phone_number}'.freeze
+PHONEID_GET_INFO_PATH = '/v1/phoneid/%{phone_number}'.freeze
+PHONEID_GET_INFO_PATH_ALT = '/v1/phoneid'.freeze
 
 module TelesignEnterprise
-
   # A set of APIs that deliver deep phone number data attributes that help optimize the end user
   # verification process and evaluate risk.
   #
@@ -15,7 +14,6 @@ module TelesignEnterprise
   # delivering real-time decision making throughout the number lifecycle and ensuring only legitimate users are
   # creating accounts and accessing your applications.
   class PhoneIdClient < Telesign::PhoneIdClient
-
     def initialize(customer_id,
                    api_key,
                    rest_endpoint: 'https://rest-ww.telesign.com',
@@ -23,7 +21,6 @@ module TelesignEnterprise
                    source: 'ruby_telesign_enterprise',
                    sdk_version_origin: TelesignEnterprise::SDK_VERSION,
                    sdk_version_dependency: Gem.loaded_specs['telesign'].version)
-
       super(customer_id,
             api_key,
             rest_endpoint: rest_endpoint,
@@ -38,9 +35,8 @@ module TelesignEnterprise
     #
     # See https://developer.telesign.com/docs/rest_phoneid-standard for detailed API documentation.
     def standard(phone_number, **params)
-
-      self.get(PHONEID_STANDARD_RESOURCE % {:phone_number => phone_number},
-               **params)
+      get(format(PHONEID_STANDARD_RESOURCE, phone_number: phone_number),
+          **params)
     end
 
     # The PhoneID Live API delivers insights such as whether a phone is active or disconnected, a device is reachable
@@ -48,10 +44,9 @@ module TelesignEnterprise
     #
     # See https://developer.telesign.com/docs/rest_api-phoneid-live for detailed API documentation.
     def live(phone_number, ucid, **params)
-
-      self.get(PHONEID_LIVE_RESOURCE % {:phone_number => phone_number},
-               ucid: ucid,
-               **params)
+      get(format(PHONEID_LIVE_RESOURCE, phone_number: phone_number),
+          ucid: ucid,
+          **params)
     end
 
     # Enter a phone number with country code to receive detailed information about carrier, location, and other details.
@@ -60,8 +55,8 @@ module TelesignEnterprise
     # See https://developer.telesign.com/enterprise/reference/submitphonenumberforidentity for detailed API documentation.
     def phone_id_path(phone_number, **params)
       params['consent'] ||= { 'method' => 1 }
-      
-      self.post(PHONEID_GET_INFO_PATH % {:phone_number => phone_number}, **params)
+
+      post(format(PHONEID_GET_INFO_PATH, phone_number: phone_number), **params)
     end
 
     # Enter a phone number with country code to receive detailed information about carrier, location, and other details.
@@ -71,8 +66,8 @@ module TelesignEnterprise
     def phone_id_body(phone_number, **params)
       params['phone_number'] = phone_number
       params['consent'] ||= { 'method' => 1 }
-  
-      self.post(PHONEID_GET_INFO_PATH_ALT, **params)
+
+      post(PHONEID_GET_INFO_PATH_ALT, **params)
     end
   end
 end
