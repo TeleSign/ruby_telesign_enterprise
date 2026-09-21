@@ -51,6 +51,7 @@ class TestPhoneId < TelesignEnterpriseTestCase
     client = TelesignEnterprise::PhoneIdClient.new(@customer_id, @api_key, rest_endpoint: 'http://localhost')
     client.phone_id_body(@phone_number)
 
+<<<<<<< HEAD
     assert_requested :post, 'http://localhost/v1/phoneid'
     assert_requested :post, 'http://localhost/v1/phoneid', headers: { 'Content-Type' => 'application/json' }
     assert_requested :post, 'http://localhost/v1/phoneid', headers: { 'x-ts-auth-method' => 'HMAC-SHA256' }
@@ -58,3 +59,13 @@ class TestPhoneId < TelesignEnterpriseTestCase
     assert_requested :post, 'http://localhost/v1/phoneid', headers: { 'Date' => /.*\S.*/ }
   end
 end
+=======
+    assert_requested :post, "http://localhost/v1/phoneid"
+    assert_requested :post, "http://localhost/v1/phoneid", headers: {'Content-Type' => 'application/json'}
+    assert_requested :post, "http://localhost/v1/phoneid", headers: {'x-ts-auth-method' => 'HMAC-SHA256'}
+    assert_requested :post, "http://localhost/v1/phoneid", headers: {'x-ts-nonce' => /.*\S.*/}
+    assert_requested :post, "http://localhost/v1/phoneid", headers: {'Date' => /.*\S.*/}
+  end
+  
+end
+>>>>>>> 163e1f59c9ef3a2faa8ea24bed231207cea8f0d4
