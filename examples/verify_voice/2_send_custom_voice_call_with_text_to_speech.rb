@@ -10,7 +10,7 @@ verify_code_with_commas = verify_code.chars.join(', ')
 tts_message = "Hello, your code is #{verify_code_with_commas}. Once again, your code is #{verify_code_with_commas}. Goodbye."
 
 verify_client = TelesignEnterprise::VerifyClient.new(customer_id, api_key)
-response = verify_client.voice(phone_number, tts_message: tts_message)
+verify_client.voice(phone_number, tts_message: tts_message)
 
 print 'Please enter the verification code you were sent: '
 user_entered_verify_code = gets.strip

@@ -19,7 +19,7 @@ if verify_code == user_entered_verify_code
   puts 'Your code is correct.'
 
   response = verify_client.completion(reference_id)
-  if response.ok and response.json['status']['code'] == 1900
+  if response.ok && (response.json['status']['code'] == 1900)
     puts 'Completion successfully reported.'
   else
     puts 'Error reporting completion.'

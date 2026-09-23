@@ -1,16 +1,14 @@
 require 'telesign/rest'
 require_relative 'constants'
 
-TELEBUREAU_RETRIEVE_RESOURCE = '/v1/telebureau/event/%{reference_id}'
-TELEBUREAU_DELETE_RESOURCE = '/v1/telebureau/event/%{reference_id}'
+TELEBUREAU_RETRIEVE_RESOURCE = '/v1/telebureau/event/%{reference_id}'.freeze
+TELEBUREAU_DELETE_RESOURCE = '/v1/telebureau/event/%{reference_id}'.freeze
 
 module TelesignEnterprise
-
   # TeleBureau is a service is based on TeleSign's watchlist, which is a proprietary database containing verified phone
   # numbers of users known to have committed online fraud. TeleSign crowd-sources this information from its customers.
   # Participation is voluntary, but you have to contribute in order to benefit.
   class TelebureauClient < Telesign::RestClient
-
     def initialize(customer_id,
                    api_key,
                    rest_endpoint: 'https://rest-ww.telesign.com',
@@ -18,7 +16,6 @@ module TelesignEnterprise
                    source: 'ruby_telesign_enterprise',
                    sdk_version_origin: TelesignEnterprise::SDK_VERSION,
                    sdk_version_dependency: Gem.loaded_specs['telesign'].version)
-
       super(customer_id,
             api_key,
             rest_endpoint: rest_endpoint,
@@ -33,9 +30,8 @@ module TelesignEnterprise
     #
     # See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
     def retrieve_event(reference_id, **params)
-
-      self.get(TELEBUREAU_RETRIEVE_RESOURCE % {:reference_id => reference_id},
-               **params)
+      get(format(TELEBUREAU_RETRIEVE_RESOURCE, reference_id: reference_id),
+          **params)
     end
 
     # Deletes a previously submitted fraud event. You make this call in your web application after completion of the
@@ -43,9 +39,8 @@ module TelesignEnterprise
     #
     # See https://developer.telesign.com/docs/telebureau-api for detailed API documentation.
     def delete_event(reference_id, **params)
-
-      self.delete(TELEBUREAU_DELETE_RESOURCE % {:reference_id => reference_id},
-                  **params)
+      delete(format(TELEBUREAU_DELETE_RESOURCE, reference_id: reference_id),
+             **params)
     end
   end
 end

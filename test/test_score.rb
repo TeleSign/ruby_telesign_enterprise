@@ -1,6 +1,6 @@
 require_relative 'test_helper'
 
-class TestScore < TelesignEnterpriseTestCase 
+class TestScore < TelesignEnterpriseTestCase
   def setup
     super
     @account_lifecycle_event = 'create'
@@ -10,13 +10,12 @@ class TestScore < TelesignEnterpriseTestCase
   end
 
   def test_score_success
-
-    stub_request(:post, "https://detect.telesign.com/intelligence/phone")
+    stub_request(:post, 'https://detect.telesign.com/intelligence/phone')
       .with(
         body: hash_including({
-          'phone_number' => @phone_number,
-          'account_lifecycle_event' => @account_lifecycle_event
-        }),
+                               'phone_number' => @phone_number,
+                               'account_lifecycle_event' => @account_lifecycle_event
+                             }),
         headers: { 'Content-Type' => 'application/x-www-form-urlencoded' }
       )
       .to_return(
@@ -36,19 +35,19 @@ class TestScore < TelesignEnterpriseTestCase
     assert_equal 'low', response.json['risk']['level']
     assert_equal 'allow', response.json['risk']['recommendation']
 
-    assert_requested :post, "https://detect.telesign.com/intelligence/phone"
-    assert_requested :post, "https://detect.telesign.com/intelligence/phone",
-                    body: hash_including({
-                      'phone_number' => @phone_number,
-                      'account_lifecycle_event' => @account_lifecycle_event
-                    })
-    assert_requested :post, "https://detect.telesign.com/intelligence/phone",
-                    headers: {'Content-Type' => 'application/x-www-form-urlencoded'}
-    assert_requested :post, "https://detect.telesign.com/intelligence/phone",
-                    headers: {'x-ts-auth-method' => 'HMAC-SHA256'}
-    assert_requested :post, "https://detect.telesign.com/intelligence/phone",
-                    headers: {'x-ts-nonce' => /.*\S.*/}
-    assert_requested :post, "https://detect.telesign.com/intelligence/phone",
-                    headers: {'Date' => /.*\S.*/}
+    assert_requested :post, 'https://detect.telesign.com/intelligence/phone'
+    assert_requested :post, 'https://detect.telesign.com/intelligence/phone',
+                     body: hash_including({
+                                            'phone_number' => @phone_number,
+                                            'account_lifecycle_event' => @account_lifecycle_event
+                                          })
+    assert_requested :post, 'https://detect.telesign.com/intelligence/phone',
+                     headers: { 'Content-Type' => 'application/x-www-form-urlencoded' }
+    assert_requested :post, 'https://detect.telesign.com/intelligence/phone',
+                     headers: { 'x-ts-auth-method' => 'HMAC-SHA256' }
+    assert_requested :post, 'https://detect.telesign.com/intelligence/phone',
+                     headers: { 'x-ts-nonce' => /.*\S.*/ }
+    assert_requested :post, 'https://detect.telesign.com/intelligence/phone',
+                     headers: { 'Date' => /.*\S.*/ }
   end
 end

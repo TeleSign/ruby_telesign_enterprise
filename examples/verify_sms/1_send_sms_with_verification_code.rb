@@ -8,7 +8,7 @@ phone_number = 'phone_number'
 verify_code = Telesign::Util.random_with_n_digits(5)
 
 verify_client = TelesignEnterprise::VerifyClient.new(customer_id, api_key)
-response = verify_client.sms(phone_number, verify_code: verify_code)
+verify_client.sms(phone_number, verify_code: verify_code)
 
 print 'Please enter the verification code you were sent: '
 user_entered_verify_code = gets.strip

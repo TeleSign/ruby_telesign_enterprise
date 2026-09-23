@@ -2,16 +2,14 @@ require 'telesign'
 require_relative 'constants'
 
 module TelesignEnterprise
-
   # App Verify is a secure, lightweight SDK that integrates a frictionless user verification process into existing
   # native mobile applications.
   class AppVerifyClient < Telesign::RestClient
-
-    APP_VERIFY_BASE_RESOURCE = "/v1/verify/auto/voice"
-    INITIATE_RESOURCE = "#{APP_VERIFY_BASE_RESOURCE}/initiate"
-    FINALIZE_RESOURCE = "#{APP_VERIFY_BASE_RESOURCE}/finalize"
-    FINALIZE_CALLERID_RESOURCE = "#{APP_VERIFY_BASE_RESOURCE}/finalize/callerid"
-    FINALIZE_TIMEOUT_RESOURCE = "#{APP_VERIFY_BASE_RESOURCE}/finalize/timeout"
+    APP_VERIFY_BASE_RESOURCE = '/v1/verify/auto/voice'.freeze
+    INITIATE_RESOURCE = "#{APP_VERIFY_BASE_RESOURCE}/initiate".freeze
+    FINALIZE_RESOURCE = "#{APP_VERIFY_BASE_RESOURCE}/finalize".freeze
+    FINALIZE_CALLERID_RESOURCE = "#{APP_VERIFY_BASE_RESOURCE}/finalize/callerid".freeze
+    FINALIZE_TIMEOUT_RESOURCE = "#{APP_VERIFY_BASE_RESOURCE}/finalize/timeout".freeze
 
     def initialize(customer_id,
                    api_key,
@@ -20,7 +18,6 @@ module TelesignEnterprise
                    source: 'ruby_telesign_enterprise',
                    sdk_version_origin: TelesignEnterprise::SDK_VERSION,
                    sdk_version_dependency: Gem.loaded_specs['telesign'].version)
-
       super(customer_id,
             api_key,
             rest_endpoint: rest_endpoint,
@@ -29,7 +26,7 @@ module TelesignEnterprise
             sdk_version_origin: sdk_version_origin,
             sdk_version_dependency: sdk_version_dependency)
     end
-    
+
     # Send call with verification code (Initiate)
     # See https://developer.telesign.com/enterprise/reference/sendappverifycode
     def initiate(phone_number, params = {})
@@ -59,6 +56,5 @@ module TelesignEnterprise
     def get_transaction_status(reference_id)
       get("#{APP_VERIFY_BASE_RESOURCE}/#{reference_id}")
     end
-
   end
 end

@@ -1,4 +1,3 @@
-# encoding: UTF-8
 require 'telesignenterprise'
 
 customer_id = 'FFFFFFFF-EEEE-DDDD-1234-AB1234567890'
@@ -9,4 +8,4 @@ language = 'fr-FR'
 tts_message = 'Votre code de vérification Widgets \'n\' More est $$CODE$$.'
 
 verify_client = TelesignEnterprise::VerifyClient.new(customer_id, api_key)
-response = verify_client.voice(phone_number, language: language, tts_message: tts_message)
+verify_client.voice(phone_number, language: language, tts_message: tts_message)
